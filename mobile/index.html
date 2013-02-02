@@ -1,0 +1,117 @@
+<html>
+    <head>
+        <title>Nearby Food</title>
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+        <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+        <script>
+            var restaurants = {};
+
+            function showRestaurant(id, options) {
+                var page = $('#page-restaurant');
+                var restaurant = restaurants[id];
+
+                page.find('h1').text(restaurant.name); 
+
+                content = $('#rcontent');
+                content.empty();
+                var cs = $('<div data-role="collapsible-set">');
+                content.append(cs);
+
+                for (i in restaurant.inspections) {
+                    var inspection = restaurant.inspections[i];
+                    console.log(cs);
+                    var cc = $('<div data-role="collapsible" data-collapsed="false">');
+                    content.prepend(cc);
+                    var h3 = $('<h3>'+ inspection.date +': ' + inspection.status + '</h3>');
+                    cc.append(h3);
+
+                    console.log(inspection);
+                    if (inspection.infractions.length > 0) {
+                        var ul = $('<ul>');
+                        for (i = 0; i < inspection.infractions.length; i++) {
+                            var infraction = inspection.infractions[i];
+                            var li = $('<li>');
+                            li.text(infraction.details + ' (' + infraction.severity + ')');
+                            ul.append(li);
+                        }
+                        cc.append(ul);
+                    } else {
+                        cc.append('<p>No Infractions</p>');
+                    }
+                    
+                    cc.collapsible();
+                }
+                cs.collapsibleset();
+
+                page.page();
+                $.mobile.changePage(page, options);
+            }
+
+            $(document).bind( "pagebeforechange", function( e, data ) {
+                if ( typeof data.toPage === "string" ) {
+
+                    var u = $.mobile.path.parseUrl( data.toPage ),
+                        re = /^#restaurant\?id=/;
+
+                    if ( u.hash.search(re) !== -1 ) {
+
+                        id = u.hash.replace(re, '')
+                        data.options.dataUrl = u.href;
+                        showRestaurant(id, data.options);
+
+                        e.preventDefault();
+                    }
+                }
+            });
+
+            navigator.geolocation.getCurrentPosition(function (e) {
+                var lat = e.coords.latitude;
+                var lon = e.coords.longitude;
+
+                $.getJSON('http://ec2-184-73-102-222.compute-1.amazonaws.com:8080/near?lat='+lat+'&lon='+lon, function(data) {
+                    console.log(data);
+                    var rlist = $('#rlist');
+                    for (i = 0; i < data.length; i++) {
+                        var restaurant = data[i];
+                        restaurants[restaurant.id] = restaurant;
+
+                        var relement = $('<li>');
+                        var alink = $('<a>');
+
+                        alink.attr('data-transition', 'slide');
+                        alink.attr('href', '#restaurant?id='+restaurant.id);
+                        alink.text('['+restaurant.score+'] '+restaurant.name);
+
+                        relement.attr('data-theme', 'c');
+                        relement.append(alink);
+
+                        rlist.append(relement);
+                    }
+                    $(rlist).listview('refresh');
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div data-role="page" id="index">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Nearby Restaurants
+                </h3>
+            </div>
+            <div data-role="content">
+                <ul data-role="listview" data-divider-theme="a" data-inset="true" id="rlist">
+                </ul>
+            </div>
+        </div>
+        <div id="page-restaurant" data-role="restaurant">
+            <div data-role="header"><h1></h1></div>
+            <div data-role="content" id="rcontent">
+            </div>
+        </div>
+
+    </body>
+</html>
