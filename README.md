@@ -5,12 +5,12 @@ The City of Toronto is getting better with releasing data to the public. Unfortu
 
 ##DineSafe Vizualization
 
-One liner.
+A visualization of the DineSafe which can be drilled down by score and category.
 
 ![DineSafe Vizualization](http://f.cl.ly/items/0T0W3j1u2v321i0P2Q3j/Screen%20Shot%202013-02-02%20at%203.00.52%20PM.png)
 
 ### How it Works
-Foo bar. Foo bar. Foo bar. Foo bar. Foo bar. Foo bar.
+The data is loaded into [crossfilter](http://square.github.com/crossfilter/), which allows fast filtering of the data. The map is rendered in [leaflet](http://leafletjs.com/) with a layer on top drawn with HTML Canvas.
 
 ##DineSafe Chrome Extension
 
