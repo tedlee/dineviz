@@ -3,7 +3,7 @@
 A Chrome extension that let's you view DineSafe Toronto data in FourSquare — automagically!
 
 ###How to Install
-1) Download the Chrome extension (.crx): [here](http://this.com/that)  
+1) Download the Chrome extension (.crx): [here](http://cl.ly/Md4Z)  
 2) Click the Settings icon on the browser toolbar (Top Right Corner) in Chrome  
 3) Select Tools > Extensions  
 4) Locate the "crx" extension file on your computer - drag and drop the file onto the Extensions page from step 2 and click Install.  
