@@ -1,0 +1,120 @@
+<html>
+    <head>
+        <title>Toronto Food</title>
+
+        <link type="text/css" href="dc.css" rel="stylesheet"/>
+
+        <script src="d3.v2.js"></script>
+        <script src="crossfilter.js"></script>
+        <script src="dc.js"></script>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+        <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+        <script src="leaflet-providers-0.0.2.js"></script>
+
+
+    </head>
+    <body>
+        <div id="map" style="position: absolute; left: 0; top: 0; bottom: 0; right: 0;">
+        </div>
+
+        <div style="position: absolute; right: 20px; bottom: 20px; height: 200px; width: 500px; background: rgba(255, 255, 255, 0.6);">
+            <div id="scoreChart">
+            </div>
+
+            <div id="typeChart">
+            </div>
+        </div>
+
+
+        <script>
+            var scoreChart = dc.barChart('#scoreChart');
+            var typeChart = dc.pieChart('#typeChart');
+
+            d3.csv('establishments.csv', function (csv) {
+                csv.forEach(function (d) {
+                    d.score = parseInt(d.score);
+                    d.lat = parseFloat(d.lat);
+                    d.lon = parseFloat(d.lon);
+                });
+                window.csv = csv;
+                var data = crossfilter(csv);
+                var all = data.groupAll();
+
+                var typeDimension = data.dimension(function (d) {return d.type;});
+                var typeGroup = typeDimension.group();
+                var scoreDimension = data.dimension(function (d) {return d.score;});
+                var scoreGroup = scoreDimension.group();
+
+                var latDimension = data.dimension(function (d) {return d.lat;});
+                var lonDimension = data.dimension(function (d) {return d.lon;});
+
+                window.typeDimension = typeDimension;
+
+                typeChart.dimension(typeDimension)
+                         .group(typeGroup)
+                         .height(200)
+                         .width(200)
+                         .radius(70)
+                         .innerRadius(20)
+                         ;
+
+                scoreChart.dimension(scoreDimension)
+                         .group(scoreGroup)
+                         .height(200)
+                         .width(300)
+                         .x(d3.scale.linear().domain([0,100]))
+                         .y(d3.scale.linear().domain([0,200]))
+                         ;
+
+                dc.renderAll();
+
+                /* map stuff */
+                var map = L.map('map').setView([43.66, -79.36], 13);
+                L.TileLayer.provider('Stamen.TonerLite').addTo(map);
+
+                var canvasTiles = L.tileLayer.canvas().addTo(map);
+
+                canvasTiles.drawTile = function(canvas, tilePoint, zoom) {
+                    console.log('x');
+                    var ctx = canvas.getContext('2d');
+
+                    var start = tilePoint.multiplyBy(this.options.tileSize);
+                    var end = tilePoint.add(new L.Point(1, 1)).multiplyBy(this.options.tileSize);
+
+                    var ul = map.unproject(start);
+                    var br = map.unproject(end);
+                    
+                    latDimension.filter([br.lat - 0.01, ul.lat + 0.01])
+                    lonDimension.filter([ul.lng - 0.01, br.lng + 0.01]);
+
+                    var points = latDimension.top(Infinity);
+                    for (i = 0; i < points.length; i++) {
+                        var point = points[i];
+
+                        var p = map.project(new L.LatLng(point.lat, point.lon));
+                        var pt = p.subtract(start)
+
+                        ctx.beginPath();
+                        ctx.arc(pt.x, pt.y, 5, 0 , 2 * Math.PI, false);
+                        ctx.fillStyle = 'black';
+                        ctx.fill();
+                        
+                    }
+
+                    latDimension.filterAll()
+                    lonDimension.filterAll();
+
+                }
+                canvasTiles.redraw();
+                dc.renderlet(function () {
+                    map.removeLayer(canvasTiles);
+                    map.addLayer(canvasTiles);
+
+
+                });
+
+            });
+
+        </script>
+    </body>
+</html>
