@@ -1,5 +1,5 @@
 
-establishments <- unique(dinesafe[,c('establishment_id','establishment_name','establishmenttype','minimum_inspections_peryear','lat','lon','score')])
+establishments <- unique(dinesafe[,c('establishment_id','establishment_name','establishment_address','establishmenttype','minimum_inspections_peryear','lat','lon','score')])
 
 establishment_types <- data.frame(table(establishments$establishmenttype))
 establishment_types <- establishment_types[order(-establishment_types$Freq),]

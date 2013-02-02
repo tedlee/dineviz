@@ -18,6 +18,14 @@
             text.pie-slice {
                 fill: black !important;
             }
+
+            .leaflet-popup-content {
+                width: 320px;
+            }
+
+            .leaflet-popup-content strong {
+                font-size: 20px;
+            }
         </style>
 
 
@@ -145,7 +153,7 @@
                     if (minPoint != null) {
                         var popup = L.popup()
                             .setLatLng([minPoint.lat, minPoint.lon])
-                            .setContent(minPoint.establishment_name + " (" + minPoint.score + ")")
+                            .setContent("<strong>" + minPoint.establishment_name + "</strong> (" + minPoint.score + ")<br/>" + minPoint.establishment_address)
                             .openOn(map);
                     }
 
