@@ -33,7 +33,7 @@ Server side we then narrow down potential matches based on lat/long and a venue 
 
 ##DineMob — A Mobile App for DineSafe Data
 
-One liner.
+A demo mobile web app using our DineSafe API and the mobile location API.
 
 ![DineMob](http://f.cl.ly/items/3m1m1o2N0P2a3c3B0a0O/dinesafe-mobile-flow.jpg)
 
