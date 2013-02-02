@@ -154,7 +154,7 @@
                         var popup = L.popup()
                             .setLatLng([minPoint.lat, minPoint.lon])
                             .setContent('<strong>' + minPoint.establishment_name +
-                                '</strong> (<a target="_blank" href="http://ec2-184-73-102-222.compute-1.amazonaws.com:8080/establishment?id='+
+                                '</strong> (<a target="_blank" href="http://ec2-184-73-102-222.compute-1.amazonaws.com:8080/info?id='+
                                 minPoint.establishment_id+'">' + minPoint.score + "</a>)<br/>" + minPoint.establishment_address)
                             .openOn(map);
                     }
