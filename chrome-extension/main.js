@@ -38,6 +38,8 @@ function makeDineSafeRequest(lat, lng, venueName) {
             toBeAppended = "<div class=\'dine-score\'>" + data['score'] + "</div>"
         } 
 
+        // Let's start building this table
+        // Append all the elements!
         toBeAppended += "<div class=\'dine-title\'>DineSafe Score</div>"
         toBeAppended += "<div class=\'dine-title\'>" + data['name'] + "</div>"
         toBeAppended += "<table><thead><tr><th>Date</th><th>Pass/Fail?</th></tr></thead><tbody>"
@@ -47,18 +49,20 @@ function makeDineSafeRequest(lat, lng, venueName) {
             result = data['inspections'][i]['status']
             console.log(date + " : " + result);
             
-
+            // Make that time pretty using relative dates
             toBeAppended += "<tr><th>" + getPrettyTime(date) + "</th>"
 
             if (result == "Pass"){
                 toBeAppended += "<th style=\'color: #87b800 \'>" + result + " ✔ </th></tr>"
             }else if (result == "Conditional Pass"){
                 toBeAppended += "<th style=\'color: #fed51b \'>" + result + "</th></tr>"
-                // toBeAppended += "<tr><th style=\'padding-right: 3px; padding-left: 15\'> Reason: </th><th>" 
-                // toBeAppended += data['inspections'][i]['infractions'][0]['details'] + "</th>"
+            }else {
+                toBeAppended += "<th style=\'color: #fed51b \'>" + result + "</th></tr>"
             }
         }
         toBeAppended += "</tbody></table>"
+
+        // Inject markup to DOM
         $("#dine-safe").append(toBeAppended);
     });
 }

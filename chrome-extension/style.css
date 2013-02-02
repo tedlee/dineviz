@@ -1,9 +1,5 @@
 /* Styling for DineSafe Data Box */
 
-.dineBox {
-
-}
-
 .dine-score {
     margin-right: auto;
     margin-left: auto;
@@ -44,6 +40,7 @@
 #dine-safe tr:hover {
     background:none;
 }
+
 #dine-safe tr th,
 #dine-safe thead th {
     color: #000;
@@ -62,11 +59,4 @@
 
 #dine-safe tr.odd td {
     background: #f2f7fc;
-}
-
-
-
-th[data-tooltip]:hover:before, th[data-tooltip]:hover:after {
-    visibility: visible;
-    -moz-transition: visibility 0s linear .3s;
 }
