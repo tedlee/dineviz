@@ -20,7 +20,7 @@ dinesafe$amount_fined <- as.numeric(gsub(',', '', dinesafe$amount_fined))
 
 locations <- read.csv('geocode/location.csv', stringsAsFactors=F)
 
-dinesafe <- merge(dinesafe, locations, by.x='establishment_address', by.y='address')
+dinesafe <- merge(dinesafe, locations, by.x='establishment_address', by.y='address', all.x=F)
 
 infractions <- data.frame(table(dinesafe[dinesafe$infraction_details != '', c('infraction_details', 'severity')]))
 infractions <- infractions[order(-infractions$Freq),]
