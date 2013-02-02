@@ -12,7 +12,7 @@
     "default_icon": "icon.png"
   },
   "content_scripts": [{
-    "js": ["jquery.js", "main.js"],
+    "js": ["jquery.js", "main.js", "moment.min.js"],
     "css": ["style.css"],
     "matches": ["*://*.foursquare.com/v/*"]
   }],
