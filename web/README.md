@@ -1,4 +1,4 @@
-dineviz
+dineviz - web vizualization
 =======
 
-A visualization of DineSafe Toronto data and Chrome extension for FourSquare integration
+A visualization of DineSafe Toronto data
