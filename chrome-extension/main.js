@@ -46,7 +46,17 @@ function makeDineSafeRequest(lat, lng, venueName) {
             date = data['inspections'][i]['date'];
             result = data['inspections'][i]['status']
             console.log(date + " : " + result);
-            toBeAppended += "<tr><th>" + getPrettyTime(date) + "</th><th>" + result + "</th></tr>"
+            
+
+            toBeAppended += "<tr><th>" + getPrettyTime(date) + "</th>"
+
+            if (result == "Pass"){
+                toBeAppended += "<th style=\'color: #87b800 \'>" + result + " ✔ </th></tr>"
+            }else if (result == "Conditional Pass"){
+                toBeAppended += "<th style=\'color: #fed51b \'>" + result + "</th></tr>"
+                // toBeAppended += "<tr><th style=\'padding-right: 3px; padding-left: 15\'> Reason: </th><th>" 
+                // toBeAppended += data['inspections'][i]['infractions'][0]['details'] + "</th>"
+            }
         }
         toBeAppended += "</tbody></table>"
         $("#dine-safe").append(toBeAppended);

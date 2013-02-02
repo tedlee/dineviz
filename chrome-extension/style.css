@@ -26,7 +26,7 @@
 
 #dine-safe table {
     border: 1px solid #e7e7e7;
-    margin: 0 -1px 24px 0;
+    margin: 0 -1px -20px 0;
     text-align: left;
     width: 100%;
 }
@@ -50,15 +50,23 @@
     font-size: 12px;
     font-weight: bold;
     line-height: 18px;
-    padding: 9px 24px;
+    padding: 9px 20px;
+    width: 84px;
     background-color:#f8f8f8;
 }
 
 #dine-safe tr td {
     border-top: 1px solid #e7e7e7;
-    padding: 6px 24px;
+    padding: 6px 20px;
 }
 
 #dine-safe tr.odd td {
     background: #f2f7fc;
+}
+
+
+
+th[data-tooltip]:hover:before, th[data-tooltip]:hover:after {
+    visibility: visible;
+    -moz-transition: visibility 0s linear .3s;
 }
