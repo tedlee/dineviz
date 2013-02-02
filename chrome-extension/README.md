@@ -2,6 +2,8 @@
 
 A Chrome extension that let's you view DineSafe Toronto data in FourSquare — automagically!
 
+![DineSafe](http://f.cl.ly/items/2j2W223v1B0o0B1B0s1L/Screen%20Shot%202013-02-02%20at%202.12.53%20PM.png)
+
 ###How to Install
 1) Download the Chrome extension (.crx): [here](http://cl.ly/Md4Z)  
 2) Click the Settings icon on the browser toolbar (Top Right Corner) in Chrome  
