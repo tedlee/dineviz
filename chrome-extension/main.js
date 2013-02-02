@@ -46,11 +46,15 @@ function makeDineSafeRequest(lat, lng, venueName) {
             date = data['inspections'][i]['date'];
             result = data['inspections'][i]['status']
             console.log(date + " : " + result);
-            toBeAppended += "<tr><th>" + date + "</th><th>" + result + "</th></tr>"
+            toBeAppended += "<tr><th>" + getPrettyTime(date) + "</th><th>" + result + "</th></tr>"
         }
         toBeAppended += "</tbody></table>"
         $("#dine-safe").append(toBeAppended);
     });
+}
+
+function getPrettyTime (dirtyDate) {
+    return moment(dirtyDate).fromNow();
 }
 
 

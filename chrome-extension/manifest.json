@@ -12,9 +12,8 @@
     "default_icon": "icon.png"
   },
   "content_scripts": [{
-    "js": ["jquery.js", "main.js"],
+    "js": ["jquery.js", "main.js", "moment.min.js"],
     "css": ["style.css"],
-    "json": ["example.json"],
     "matches": ["*://*.foursquare.com/v/*"]
   }],
   "manifest_version": 2
