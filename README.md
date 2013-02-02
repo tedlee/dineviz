@@ -3,7 +3,7 @@ Dineviz - A Better Way to View DineSafe Toronto Data
 
 The City of Toronto is getting better with releasing data to the public. Unfortunately it's often poorly formatted and cumbersome for the general public to look at. We looked at the DineSafe Toronto Data Set and set out to make the data more easily understood both for future developer and the general public. We built four components to tackly this: a normalized JSON API, a map vizualization, a Chrome extennsion for FourSquare integration, and a mobile web app for accessing the data on the go.
 
-##DineSafe Vizualization
+##[DineSafe Vizualization](http://dineviz.s3-website-us-east-1.amazonaws.com/)
 
 A visualization of the DineSafe which can be drilled down by score and category.
 
@@ -31,7 +31,7 @@ After installing the extension, when a user hits a FourSquare venue **[foursquar
 
 Server side we then narrow down potential matches based on lat/long and a venue name fuzzy search in an attempt to match up the FourSquare and DineSafe data. The server also stores a precalculated score for how "DineSafe" a place is based on the accumulation of previous inspections. This score along with all inspections are returned to the client and injected into the DOM.
 
-##DineMob — A Mobile App for DineSafe Data
+##[DineMob](http://dinemob.s3-website-us-east-1.amazonaws.com/#restaurant?id=10231375) — A Mobile App for DineSafe Data
 
 A demo mobile web app using our DineSafe API and the mobile location API.
 
