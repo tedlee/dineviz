@@ -67,30 +67,32 @@
                 }
             });
 
-            navigator.geolocation.getCurrentPosition(function (e) {
-                var lat = e.coords.latitude;
-                var lon = e.coords.longitude;
+            $(document).on('pageinit', function () {
+                navigator.geolocation.getCurrentPosition(function (e) {
+                    var lat = e.coords.latitude;
+                    var lon = e.coords.longitude;
 
-                $.getJSON('http://ec2-184-73-102-222.compute-1.amazonaws.com:8080/near?lat='+lat+'&lon='+lon, function(data) {
-                    console.log(data);
-                    var rlist = $('#rlist');
-                    for (i = 0; i < data.length; i++) {
-                        var restaurant = data[i];
-                        restaurants[restaurant.id] = restaurant;
+                    $.getJSON('http://ec2-184-73-102-222.compute-1.amazonaws.com:8080/near?lat='+lat+'&lon='+lon, function(data) {
+                        console.log(data);
+                        var rlist = $('#rlist');
+                        for (i = 0; i < data.length; i++) {
+                            var restaurant = data[i];
+                            restaurants[restaurant.id] = restaurant;
 
-                        var relement = $('<li>');
-                        var alink = $('<a>');
+                            var relement = $('<li>');
+                            var alink = $('<a>');
 
-                        alink.attr('data-transition', 'slide');
-                        alink.attr('href', '#restaurant?id='+restaurant.id);
-                        alink.text('['+restaurant.score+'] '+restaurant.name);
+                            alink.attr('data-transition', 'slide');
+                            alink.attr('href', '#restaurant?id='+restaurant.id);
+                            alink.text(restaurant.name + ' ['+restaurant.score+'/100]');
 
-                        relement.attr('data-theme', 'c');
-                        relement.append(alink);
+                            relement.attr('data-theme', 'c');
+                            relement.append(alink);
 
-                        rlist.append(relement);
-                    }
-                    $(rlist).listview('refresh');
+                            rlist.append(relement);
+                        }
+                        $(rlist).listview('refresh');
+                    });
                 });
             });
         </script>
@@ -99,7 +101,7 @@
         <div data-role="page" id="index">
             <div data-theme="a" data-role="header">
                 <h3>
-                    Nearby Restaurants
+                    Nearby Food
                 </h3>
             </div>
             <div data-role="content">
