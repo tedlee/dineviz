@@ -1,2 +1,64 @@
 /* Styling for DineSafe Data Box */
 
+.dineBox {
+
+}
+
+.dine-score {
+    margin-right: auto;
+    margin-left: auto;
+    width: 55px;
+    color: #4d4d4d;
+    font-weight: bold;
+    font-size: 4.0em;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.dine-title {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90px;
+    font-size: 1.0em;
+    font-weight: normal;
+    text-align: center;
+}
+
+#dine-safe table {
+    border: 1px solid #e7e7e7;
+    margin: 0 -1px 24px 0;
+    text-align: left;
+    width: 100%;
+}
+
+#dine-safe tr {
+    background-color:#FFF;
+
+}
+
+#dine-safe .alternate {
+    background-color:#fff;
+}
+
+
+#dine-safe tr:hover {
+    background:none;
+}
+#dine-safe tr th,
+#dine-safe thead th {
+    color: #000;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 18px;
+    padding: 9px 24px;
+    background-color:#f8f8f8;
+}
+
+#dine-safe tr td {
+    border-top: 1px solid #e7e7e7;
+    padding: 6px 24px;
+}
+
+#dine-safe tr.odd td {
+    background: #f2f7fc;
+}
