@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Toronto Food</title>
+        <title>Toronto DineSafe Explorer</title>
 
         <link type="text/css" href="dc.css" rel="stylesheet"/>
 
@@ -10,6 +10,15 @@
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
         <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
         <script src="leaflet-providers-0.0.2.js"></script>
+        <style>
+            body {
+                font-family: helvetica, sans-serif, sans;
+            }
+
+            text.pie-slice {
+                fill: black !important;
+            }
+        </style>
 
 
     </head>
@@ -75,7 +84,6 @@
                 var canvasTiles = L.tileLayer.canvas().addTo(map);
 
                 canvasTiles.drawTile = function(canvas, tilePoint, zoom) {
-                    console.log('x');
                     var ctx = canvas.getContext('2d');
 
                     var start = tilePoint.multiplyBy(this.options.tileSize);
@@ -94,9 +102,10 @@
                         var p = map.project(new L.LatLng(point.lat, point.lon));
                         var pt = p.subtract(start)
 
+
                         ctx.beginPath();
-                        ctx.arc(pt.x, pt.y, 5, 0 , 2 * Math.PI, false);
-                        ctx.fillStyle = 'black';
+                        ctx.arc(pt.x, pt.y, 4, 0 , 2 * Math.PI, false);
+                        ctx.fillStyle = 'rgba(200, 0, 0, 1)';
                         ctx.fill();
                         
                     }
@@ -109,7 +118,36 @@
                 dc.renderlet(function () {
                     map.removeLayer(canvasTiles);
                     map.addLayer(canvasTiles);
+                });
 
+                map.on('click', function (e) {
+                    var lat = e.latlng.lat;
+                    var lon = e.latlng.lng;
+
+                    latDimension.filter([lat - 0.001, lat + 0.001])
+                    lonDimension.filter([lon - 0.001, lon + 0.001])
+
+                    var minDist = Infinity;
+                    var minPoint = null;
+                    var ests = lonDimension.top(100);
+                    for (var i = 0; i < ests.length; i++){
+                        var est = ests[i];
+                        var dist = Math.sqrt((lat - est.lat) ^ 2 + (lon - est.lon) ^ 2);
+                        if (dist < minDist) {
+                            dist = minDist;
+                            minPoint = est;
+                        }
+                    }
+
+                    latDimension.filterAll()
+                    lonDimension.filterAll();
+
+                    if (minPoint != null) {
+                        var popup = L.popup()
+                            .setLatLng([minPoint.lat, minPoint.lon])
+                            .setContent(minPoint.establishment_name + " (" + minPoint.score + ")")
+                            .openOn(map);
+                    }
 
                 });
 
