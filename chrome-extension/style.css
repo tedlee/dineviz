@@ -7,7 +7,7 @@
 .dine-score {
     margin-right: auto;
     margin-left: auto;
-    width: 55px;
+    width: 200px;
     color: #4d4d4d;
     font-weight: bold;
     font-size: 4.0em;
@@ -18,9 +18,9 @@
 .dine-title {
     margin-left: auto;
     margin-right: auto;
-    width: 90px;
+    width: 250px;
     font-size: 1.0em;
-    font-weight: normal;
+    font-weight: bold;
     text-align: center;
 }
 

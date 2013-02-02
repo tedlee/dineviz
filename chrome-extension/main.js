@@ -27,18 +27,29 @@ function makeDineSafeRequest(lat, lng, venueName) {
     var requestURL = "http://ec2-184-73-102-222.compute-1.amazonaws.com:8080/fuzzy_match?lat=" + lat + "&lon=" + lng + "&name=" + venueName
     $.getJSON(requestURL, function(data){
 
-        $("#dine-safe").append("<div class=\'dine-score\'>" + data['score'] + "</div>");
-        $("#dine-safe").append("<div class=\'dine-title\'>DineSafe Score</div>");
-        $("#dine-safe").append( data['name'] )
-        $("#dine-safe").append("<table><thead><tr><th>Date</th><th>Pass/Fail?</th></tr></thead><tbody>")
+        // Alter font color based on score. Needs refactoring
+        if (data['score'] > 84){
+            toBeAppended = "<div class=\'dine-score\' style=\'color: #87b800 \'>" + data['score'] + "</div>"
+        } else if (data['score'] >= 70) {
+            toBeAppended = "<div class=\'dine-score\' style=\'color: #fed51b \'>" + data['score'] + "</div>"
+        } else if (data['score'] < 70) {
+            toBeAppended = "<div class=\'dine-score\' style=\'color: #e9152b \'>" + data['score'] + "</div>"
+        } else{
+            toBeAppended = "<div class=\'dine-score\'>" + data['score'] + "</div>"
+        } 
+
+        toBeAppended += "<div class=\'dine-title\'>DineSafe Score</div>"
+        toBeAppended += "<div class=\'dine-title\'>" + data['name'] + "</div>"
+        toBeAppended += "<table><thead><tr><th>Date</th><th>Pass/Fail?</th></tr></thead><tbody>"
 
         for(i in data['inspections']) {
             date = data['inspections'][i]['date'];
             result = data['inspections'][i]['status']
             console.log(date + " : " + result);
-            $("#dine-safe").append("<tr><th>" + date + "</th><th>" + result + "</th></tr>")
+            toBeAppended += "<tr><th>" + date + "</th><th>" + result + "</th></tr>"
         }
-        $("#dine-safe").append("</tbody></table>");
+        toBeAppended += "</tbody></table>"
+        $("#dine-safe").append(toBeAppended);
     });
 }
 
